@@ -1,0 +1,4 @@
+# Project exclude paths
+/ApiGateway/target/
+/Facture/target/
+/Reservation/target/
