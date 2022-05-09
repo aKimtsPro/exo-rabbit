@@ -1,0 +1,8 @@
+app:
+  services:
+    facture:
+      url: http://localhost:8282/factures
+      name: facture
+    reservation:
+      url: http://localhost:8181/reserv
+      name: reservation

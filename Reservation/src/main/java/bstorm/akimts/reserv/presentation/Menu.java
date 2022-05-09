@@ -1,13 +1,10 @@
 package bstorm.akimts.reserv.presentation;
 
-import bstorm.akimts.reserv.models.Reservation;
+import forms.ReservForm;
 import bstorm.akimts.reserv.service.ReservationService;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 //@Component
@@ -44,7 +41,7 @@ public class Menu implements InitializingBean {
             System.out.println("continuer ? (Y/n)");
             continuer = sc.next().charAt(0) != 'n';
 
-            service.create(new Reservation(date, dateD));
+            service.create(new ReservForm(date, dateD));
         }while(continuer);
     }
 

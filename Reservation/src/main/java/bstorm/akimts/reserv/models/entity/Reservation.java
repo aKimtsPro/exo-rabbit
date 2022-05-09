@@ -1,5 +1,6 @@
-package bstorm.akimts.reserv.models;
+package bstorm.akimts.reserv.models.entity;
 
+import dtos.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,16 +16,11 @@ public class Reservation {
     private LocalDate arrive;
     private LocalDate depart;
     private UUID ref = UUID.randomUUID();
-    private Status status = Status.DEMANDE;
+    private ReservationStatus status = ReservationStatus.DEMANDEE;
 
     public Reservation(LocalDate arrive, LocalDate depart) {
         this.arrive = arrive;
         this.depart = depart;
-    }
-
-    public enum Status {
-        DEMANDE,
-        FACTURE
     }
 
 }

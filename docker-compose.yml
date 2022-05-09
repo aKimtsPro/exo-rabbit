@@ -1,0 +1,40 @@
+version: 3.9
+networks:
+  back-end:
+    driver: bridge
+
+services:
+  rabbit:
+    image: rabbitmq:3.8-management
+    networks:
+      - back-end
+  api-gateway:
+    restart: always
+    build: ./ApiGateway
+    ports:
+      - "8080:8080"
+    networks:
+      - back-end
+    depends_on:
+      - reserv-service
+      - facture-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE: prod"
+  reserv-service:
+    restart: always
+    build: ./Reservation
+    networks:
+      - back-end
+    depends_on:
+      - rabbit
+    environment:
+      - "SPRING_PROFILES_ACTIVE: prod"
+  facture-service:
+    restart: always
+    build: ./Facture
+    networks:
+      - back-end
+    depends_on:
+      - rabbit
+    environment:
+      - "SPRING_PROFILES_ACTIVE: prod"

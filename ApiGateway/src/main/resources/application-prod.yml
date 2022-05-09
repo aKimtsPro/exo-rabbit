@@ -1,0 +1,8 @@
+app:
+  services:
+    facture:
+      url: http://facture-service:8080
+      name: facture
+    reservation:
+      url: http://reserv-service:8080
+      name: reservation

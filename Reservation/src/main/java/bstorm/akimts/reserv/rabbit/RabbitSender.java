@@ -1,8 +1,9 @@
 package bstorm.akimts.reserv.rabbit;
 
-import bstorm.akimts.reserv.models.Reservation;
+import bstorm.akimts.reserv.models.entity.Reservation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dtos.ReservationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -10,10 +11,6 @@ import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 @Component
 public class RabbitSender implements InitializingBean {
@@ -27,7 +24,7 @@ public class RabbitSender implements InitializingBean {
         this.mapper = mapper;
     }
 
-    public void sendReservToFacture(Reservation r) throws JsonProcessingException {
+    public void sendReservToFacture(ReservationDTO r) throws JsonProcessingException {
         String fJson = mapper.writeValueAsString(r);
         Message m = MessageBuilder.withBody(fJson.getBytes())
                 .setContentType("application/json")
