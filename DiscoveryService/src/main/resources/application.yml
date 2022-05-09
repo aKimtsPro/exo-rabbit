@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api-gateway
+    name: discovered-test
   cloud:
     consul:
       host: localhost
@@ -14,11 +14,6 @@ spring:
         register: true
         register-health-check: true
         deregister: true
-app:
-  services:
-    facture:
-      url: http://localhost:8282/factures
-      name: facture
-    reservation:
-      url: http://localhost:8181/reserv
-      name: reservation
+
+server:
+  port: 8383
