@@ -10,7 +10,9 @@ import java.util.Map;
 public class HealthController {
 
     @GetMapping("/health")
-    public String healthCheck(@Value("${spring.cloud.consul.discovery}")Map<String, String> props){
-        return props.get("service-name") + " - " + props.get("instance-id");
+    public String healthCheck(
+            @Value("${spring.cloud.consul.discovery.service-name}")String serviceName,
+            @Value("${spring.cloud.consul.discovery.instance-id}") String id){
+        return serviceName + " - " + id;
     }
 }

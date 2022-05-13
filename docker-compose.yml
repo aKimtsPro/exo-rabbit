@@ -1,14 +1,32 @@
-version: 3.9
+version: "3.9"
 networks:
   back-end:
+    driver: bridge
+  reserv:
+    driver: bridge
+  facture:
     driver: bridge
 
 services:
   rabbit:
+    container_name: RabbitMQ
     image: rabbitmq:3.8-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - back-end
+
+  consul-server:
+    container_name: CONSUL
+    image: consul
+    ports:
+      - "8500:8500"
+    networks:
+      - back-end
+
   api-gateway:
+    container_name: API_Gateway
     restart: always
     build: ./ApiGateway
     ports:
@@ -19,22 +37,63 @@ services:
       - reserv-service
       - facture-service
     environment:
-      - "SPRING_PROFILES_ACTIVE: prod"
+      - "SPRING_PROFILES_ACTIVE:prod"
+  api-gateway-2:
+    container_name: API_Gateway_2
+    restart: always
+    build: ./ApiGatewayV2
+    ports:
+      - "8080:8080"
+    networks:
+      - back-end
+    depends_on:
+      - reserv-service
+      - facture-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE:prod"
+
   reserv-service:
+    deploy:
+      replicas: 2
     restart: always
     build: ./Reservation
     networks:
       - back-end
+      - reserv
     depends_on:
       - rabbit
+      - reserv-db
     environment:
-      - "SPRING_PROFILES_ACTIVE: prod"
+      - "SPRING_PROFILES_ACTIVE:prod"
+  reserv-db:
+    container_name: ReservDB
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: reservDB
+    networks:
+      - reserv
+
   facture-service:
+    deploy:
+      replicas: 2
     restart: always
     build: ./Facture
     networks:
       - back-end
+      - facture
     depends_on:
       - rabbit
+      - facture-db
     environment:
-      - "SPRING_PROFILES_ACTIVE: prod"
+      - "SPRING_PROFILES_ACTIVE:prod"
+  facture-db:
+    container_name: FactureDB
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: factureDB
+    networks:
+      - facture

@@ -11,7 +11,7 @@ public class FactureMapper {
         if(entity == null)
             return null;
 
-        return new FactureDTO(entity.getReserv_ref(), entity.getPrix());
+        return new FactureDTO(entity.getReservRef(), entity.getPrix());
     }
 
 }

@@ -25,7 +25,7 @@ public class RabbitReciever {
     public void consumeReserv(String message) throws JsonProcessingException {
         logger.info("RECIEVED FROM facturations: " + message);
         FactureDTO facture = mapper.readValue(message, FactureDTO.class);
-        service.setToFacture(facture.getReserv_ref());
+        service.setToFacture(facture.getReservRef());
     }
 
 }

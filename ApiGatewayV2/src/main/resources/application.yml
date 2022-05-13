@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active:
+      prod
+  application:
+    name: ApiGatewayV2
+  cloud:
+    consul:
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}:${random.uuid}
+        health-check-path: "/actuator/health"
+        deregister: true
+      config:
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: reservation-service
+          uri: lb://reservation-service
+          predicates:
+            - Method=POST
+            - Path=/reserv/**
+          filters:
+            - RewritePath=/reserv/(?<path>.*), /$\{path}
+        - id: facture-service
+          uri: lb://facturation-service
+          predicates:
+            - Path=/factures/**
+          filters:
+            - RewritePath=/factures/(?<path>.*), /$\{path}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+         - health
+         - info
+         - beans
+         - mappings

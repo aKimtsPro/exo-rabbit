@@ -1,19 +1,8 @@
 spring:
-  application:
-    name: api-gateway
   cloud:
     consul:
       host: localhost
-      port: 8500
-      config:
-        enabled: false
-      discovery:
-        instance-id: ${spring.application.name}:${random.value}
-        service-name: name:${spring.application.name}
-        health-check-path: "/health"
-        register: true
-        register-health-check: true
-        deregister: true
+
 app:
   services:
     facture:

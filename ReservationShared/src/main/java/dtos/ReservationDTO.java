@@ -23,6 +23,17 @@ public class ReservationDTO {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "ReservationDTO{" +
+                "ref=" + ref +
+                ", arrive=" + arrive +
+                ", depart=" + depart +
+                ", status=" + status +
+                ", factureDTO=" + factureDTO +
+                '}';
+    }
+
     public UUID getRef() {
         return ref;
     }

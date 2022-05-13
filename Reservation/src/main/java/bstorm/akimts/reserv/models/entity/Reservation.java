@@ -1,21 +1,32 @@
 package bstorm.akimts.reserv.models.entity;
 
 import dtos.ReservationStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-@Data
+@Entity
+@Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Reservation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(nullable = false, unique = true, updatable = false)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID ref = UUID.randomUUID();
 
     private LocalDate arrive;
     private LocalDate depart;
-    private UUID ref = UUID.randomUUID();
+
+    @Enumerated(EnumType.STRING)
     private ReservationStatus status = ReservationStatus.DEMANDEE;
 
     public Reservation(LocalDate arrive, LocalDate depart) {

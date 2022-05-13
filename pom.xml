@@ -10,7 +10,6 @@
 		<module>ApiGateway</module>
 		<module>FactureShared</module>
 		<module>ReservationShared</module>
-        <module>DiscoveryService</module>
     </modules>
 
     <parent>
@@ -70,7 +69,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
+				<version>2021.0.2</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

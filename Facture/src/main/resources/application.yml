@@ -1,3 +1,24 @@
 spring:
+  application:
+    name: facturation-service
+
   profiles:
-    active: dev
+    active: prod
+
+  rabbitmq:
+    port: 5672
+    stream:
+      username: guest
+      password: guest
+
+  cloud:
+    consul:
+      discovery:
+        instance-id: ${spring.application.name}:${random.uuid}
+        service-name: ${spring.application.name}
+        health-check-path: "/health"
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

@@ -1,17 +1,24 @@
 package bstorm.akimts.exo.facture.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.*;
 import java.util.UUID;
 
-@Data
+@Entity
+@Getter @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Facture {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private double prix;
-    private UUID reserv_ref;
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID reservRef;
 
+    public Facture(double prix, UUID reservRef) {
+        this.prix = prix;
+        this.reservRef = reservRef;
+    }
 }

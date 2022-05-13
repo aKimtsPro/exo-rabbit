@@ -1,2 +1,7 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+
 server:
   port: 8282

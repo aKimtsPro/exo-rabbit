@@ -3,6 +3,7 @@ package bstorm.akimts.exo.facture.rabbit;
 import bstorm.akimts.exo.facture.model.Facture;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.FactureDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -15,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @Component
-public class RabbitSender implements InitializingBean {
+public class RabbitSender {
 
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper mapper;
@@ -26,7 +27,7 @@ public class RabbitSender implements InitializingBean {
         this.mapper = mapper;
     }
 
-    public void sendFactureToReserv(Facture f) throws JsonProcessingException {
+    public void sendFactureToReserv(FactureDTO f) throws JsonProcessingException {
         String fJson = mapper.writeValueAsString(f);
         Message m = MessageBuilder.withBody(fJson.getBytes(StandardCharsets.UTF_8))
                 .setContentType("application/json")
@@ -35,8 +36,4 @@ public class RabbitSender implements InitializingBean {
         rabbitTemplate.send("direct.fact", "fact", m);
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        sendFactureToReserv(new Facture(10, UUID.randomUUID()));
-    }
 }

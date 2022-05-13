@@ -4,23 +4,30 @@ import java.util.UUID;
 
 public class FactureDTO {
 
-    private UUID reserv_ref;
+    private UUID reservRef;
     private double price;
 
     public FactureDTO() {
     }
 
-    public FactureDTO(UUID reserv_ref, double price) {
-        this.reserv_ref = reserv_ref;
+    public FactureDTO(UUID reservRef, double price) {
+        this.reservRef = reservRef;
         this.price = price;
     }
 
-    public UUID getReserv_ref() {
-        return reserv_ref;
+    @Override
+    public String toString() {
+        return "FactureDTO{ reservRef=" + reservRef +
+                ", price=" + price +
+                '}';
     }
 
-    public void setReserv_ref(UUID reserv_ref) {
-        this.reserv_ref = reserv_ref;
+    public UUID getReservRef() {
+        return reservRef;
+    }
+
+    public void setReservRef(UUID reservRef) {
+        this.reservRef = reservRef;
     }
 
     public double getPrice() {
