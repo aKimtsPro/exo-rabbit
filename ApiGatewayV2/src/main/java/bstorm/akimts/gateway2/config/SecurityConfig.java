@@ -35,7 +35,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+//    @Bean
     public MapReactiveUserDetailsService userDetailsRepository(PasswordEncoder encoder) {
         User.UserBuilder userBuilder = User.builder();
         UserDetails user = userBuilder.username("user")
